@@ -1,0 +1,47 @@
+wget https://downloads.apache.org/kafka/3.6.1/kafka_2.12-3.6.1.tgz
+tar -xvf kafka_2.12-3.6.1.tgz
+
+-----------------------
+java -version
+sudo yum install java-1.8.0-openjdk
+java -version
+cd kafka_2.12-3.6.1
+
+Start Kafka in KRaft mode:
+-------------------------------
+~/kafka_2.12-3.6.1/bin/kafka-storage.sh random-uuid
+This returns a UUID, for example 76BLQI7sT_ql1mBfKsOk9Q
+
+Next, format your storage directory (replace <uuid> by your UUID obtained above)
+/bin/kafka-storage.sh format -t <uuid> -c ~/kafka_2.12-3.6.1/config/kraft/server.properties
+
+Start Kafka-server:
+----------------------------------------
+Duplicate the session & enter in a new console --
+export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
+cd kafka_2.12-3.6.1
+~/kafka_2.12-3.6.1/bin/kafka-server-start.sh ~/kafka_2.12-3.6.1/config/kraft/server.properties
+
+It is pointing to private server , change server.properties so that it can run in public IP 
+
+To do this , you can follow any of the 2 approaches shared below --
+Do a "sudo nano config/kraft/server.properties" - change ADVERTISED_LISTENERS to public ip of the EC2 instance
+
+
+Create the topic:
+-----------------------------
+Duplicate the session & enter in a new console --
+cd kafka_2.12-3.6.1
+bin/kafka-topics.sh --create --topic demo_testing2 --bootstrap-server 18.141.172.167:9092 --replication-factor 1 --partitions 1
+
+
+These last 2 steps are for demonstration only, the producer and consumer is implemented in Jupyter Notebook for this project
+Start Producer:
+--------------------------
+bin/kafka-console-producer.sh --topic demo_testing2 --bootstrap-server 18.141.172.167:9092 
+
+Start Consumer:
+-------------------------
+Duplicate the session & enter in a new console --
+cd kafka_2.12-3.3.1
+bin/kafka-console-consumer.sh --topic demo_testing2 --bootstrap-server 18.141.172.167:9092
