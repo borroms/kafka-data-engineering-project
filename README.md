@@ -4,7 +4,7 @@ This project is based on a tutorial from YouTube on executing an End-To-End Data
 
 ## Introduction
 
-In this project, you'll find an implementation of the tutorial mentioned above, utilizing various technologies such as Python, Amazon Web Services (AWS), Apache Kafka, Glue, Athena, and SQL.
+In this project, you'll find an implementation of the tutorial mentioned above, utilizing various technologies such as Python, Amazon Web Services (AWS), EC2, Apache Kafka, Glue, Athena, and SQL.
 
 ## Architecture
 
